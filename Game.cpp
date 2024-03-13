@@ -1,7 +1,3 @@
-//
-// Created by evdok on 10.03.24.
-//
-
 #include "Game.hpp"
 #include "Functions.hpp"
 #include "Class.hpp"
