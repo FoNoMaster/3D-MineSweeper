@@ -57,6 +57,20 @@ void game (sf::RenderWindow &window, sf::Event ev, sf::View &view){
     valbomb.setOrigin(valbomb.getLocalBounds().width / 2, valbomb.getLocalBounds().height / 2);
     valbomb.setPosition(2 * textBombs.getLocalBounds().width + textBombs.getLocalBounds().width + 326, 2 * textBombs.getLocalBounds().height + 20);
 
+
+    sf::Text textBombs1("", font, 50);
+    textBombs1.setFillColor(sf::Color::Black);
+    textBombs1.setString(L"Bombs left:");
+    textBombs1.setOrigin(textBombs1.getLocalBounds().width / 2, textBombs1.getLocalBounds().height / 2);
+    textBombs1.setPosition(2 * textBombs1.getLocalBounds().width + 15 + 419, 2 * textBombs1.getLocalBounds().height + 80);
+    int bombPercentage1 = 0;
+    sf::Text valbomb1("", font, 50);
+    valbomb1.setFillColor(sf::Color::Black);
+    valbomb1.setString(L"0");
+    valbomb1.setOrigin(valbomb1.getLocalBounds().width / 2, valbomb1.getLocalBounds().height / 2);
+    valbomb1.setPosition(2 * textBombs1.getLocalBounds().width + 618, 2 * textBombs1.getLocalBounds().height + 85);
+
+
     sf::Text textLayer("", font, 50);
     textLayer.setFillColor(sf::Color::Black);
     textLayer.setString(L"Layer:");
@@ -158,10 +172,16 @@ void game (sf::RenderWindow &window, sf::Event ev, sf::View &view){
                                 window.mapPixelToCoords(sf::Mouse::getPosition()).x,
                                 window.mapPixelToCoords(sf::Mouse::getPosition()).y)) {
                             if(touched_rect_right == (layer - 1) * x_size * y_size + i) {
-                                if(data[(layer - 1) * x_size * y_size + i].have_flag)
+                                if(data[(layer - 1) * x_size * y_size + i].have_flag) {
+                                    bombPercentage1++;
+                                    valbomb1.setString(std::to_string(bombPercentage1));
                                     data[(layer - 1) * x_size * y_size + i].have_flag = false;
-                                else
+                                }
+                                else {
+                                    bombPercentage1--;
+                                    valbomb1.setString(std::to_string(bombPercentage1));
                                     data[(layer - 1) * x_size * y_size + i].have_flag = true;
+                                }
                             }
                         }
                     }
@@ -177,6 +197,15 @@ void game (sf::RenderWindow &window, sf::Event ev, sf::View &view){
                         } else{
                             if(first_touch) {
                                 generate_bombs(data, bombPercentage, (layer - 1) * x_size * y_size + i, x_size, y_size, z_size, font);
+
+                                bombPercentage1 = 0;
+                                for(int it = 0; it < x_size * y_size * z_size; it++){
+                                    if(data[it].have_bomb)
+                                        bombPercentage1++;
+                                }
+                                std::string tmp = std::to_string(bombPercentage1);
+
+                                valbomb1.setString(tmp);
 
                                 for(int ii = 0; ii < x_size * y_size * z_size; ii++){
                                     if(data[ii].bombs_near > 0){
@@ -499,8 +528,10 @@ void game (sf::RenderWindow &window, sf::Event ev, sf::View &view){
         window.draw(change);
         window.draw(textLayer);
         window.draw(vLayer);
+        window.draw(textBombs1);
         window.draw(textBombs);
         window.draw(valbomb);
+        window.draw(valbomb1);
         window.draw(Time);
         window.draw(timego);
         window.setView(view);
