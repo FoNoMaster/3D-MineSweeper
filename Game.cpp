@@ -24,7 +24,7 @@ void game (sf::RenderWindow &window, sf::Event ev, sf::View &view){
     data = reroll_data(x_size, y_size, z_size);
 
     sf::Font font;
-    font.loadFromFile("../../../../../usr/share/fonts/truetype/freefont/FreeMonoBold.ttf");
+    font.loadFromFile("../Halogen_0.ttf");
 
 
     sf::Text Time("", font, 50);
@@ -45,7 +45,7 @@ void game (sf::RenderWindow &window, sf::Event ev, sf::View &view){
     textBombs.setFillColor(sf::Color::Black);
     textBombs.setString(L"Bombs:  %");
     textBombs.setOrigin(textBombs.getLocalBounds().width / 2, textBombs.getLocalBounds().height / 2);
-    textBombs.setPosition(2 * textBombs.getLocalBounds().width + 15 + 500, 2 * textBombs.getLocalBounds().height + 15);
+    textBombs.setPosition(2 * textBombs.getLocalBounds().width + 500, 2 * textBombs.getLocalBounds().height + 15);
     int bombPercentage = 20;
     sf::Text valbomb("", font, 50);
     valbomb.setFillColor(sf::Color::Black);
